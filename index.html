@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fenerversusgala</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dark"] {
+  --bg:       #07070a;
+  --bg2:      #0d0d12;
+  --surface:  #111118;
+  --surface2: #18181f;
+  --surface3: #22222c;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.13);
+  --text:     #f0f0f6;
+  --text2:    #a0a0b8;
+  --text3:    #5a5a70;
+  --accent:   #fde100;
+  --fb:       #0041c2;
+  --fb2:      #6699ff;
+  --gs:       #c8002e;
+  --gs2:      #ff5c7a;
+  --glow-fb:  rgba(0,65,194,.25);
+  --glow-gs:  rgba(200,0,46,.25);
+  --hero-tint:radial-gradient(ellipse 70% 50% at 20% 30%,rgba(0,65,194,.12),transparent 55%),
+              radial-gradient(ellipse 70% 50% at 80% 70%,rgba(200,0,46,.12),transparent 55%);
+}
+[data-theme="light"] {
+  --bg:       #f3f3f8;
+  --bg2:      #eaeaf2;
+  --surface:  #ffffff;
+  --surface2: #f8f8fc;
+  --surface3: #ececf5;
+  --border:   rgba(0,0,0,.08);
+  --border2:  rgba(0,0,0,.15);
+  --text:     #0a0a14;
+  --text2:    #4a4a60;
+  --text3:    #9090a8;
+  --accent:   #0041c2;
+  --fb:       #0041c2;
+  --fb2:      #3366cc;
+  --gs:       #c8002e;
+  --gs2:      #e0003a;
+  --glow-fb:  rgba(0,65,194,.1);
+  --glow-gs:  rgba(200,0,46,.1);
+  --hero-tint:radial-gradient(ellipse 70% 50% at 20% 30%,rgba(0,65,194,.06),transparent 55%),
+              radial-gradient(ellipse 70% 50% at 80% 70%,rgba(200,0,46,.06),transparent 55%);
+}
+[data-theme="fb"] {
+  --bg:       #010614;
+  --bg2:      #020b20;
+  --surface:  #050f2e;
+  --surface2: #091838;
+  --surface3: #0e2248;
+  --border:   rgba(253,225,0,.1);
+  --border2:  rgba(253,225,0,.22);
+  --text:     #dce8ff;
+  --text2:    #7a9acc;
+  --text3:    #3a5a8a;
+  --accent:   #fde100;
+  --fb:       #2255dd;
+  --fb2:      #80aaff;
+  --gs:       #c8002e;
+  --gs2:      #ff5c7a;
+  --glow-fb:  rgba(0,65,194,.5);
+  --glow-gs:  rgba(200,0,46,.18);
+  --hero-tint:radial-gradient(ellipse 90% 60% at 50% 40%,rgba(0,65,194,.35),transparent 70%);
+}
+[data-theme="gs"] {
+  --bg:       #100005;
+  --bg2:      #1c000a;
+  --surface:  #280010;
+  --surface2: #330015;
+  --surface3: #440020;
+  --border:   rgba(245,166,35,.1);
+  --border2:  rgba(245,166,35,.22);
+  --text:     #ffe8ee;
+  --text2:    #cc8890;
+  --text3:    #7a3848;
+  --accent:   #f5a623;
+  --fb:       #2255dd;
+  --fb2:      #80aaff;
+  --gs:       #dd0030;
+  --gs2:      #ff6680;
+  --glow-fb:  rgba(0,65,194,.18);
+  --glow-gs:  rgba(200,0,46,.55);
+  --hero-tint:radial-gradient(ellipse 90% 60% at 50% 40%,rgba(200,0,46,.35),transparent 70%);
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'DM Sans',sans-serif; line-height:1.6;
+  overflow-x:hidden; transition:background .4s, color .4s;
+}
+body::before {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:var(--hero-tint);
+  transition:background .5s;
+}
+body > * { position:relative; z-index:1; }
+a { color:inherit; text-decoration:none; }
+button { font-family:'DM Sans',sans-serif; cursor:pointer; border:none; outline:none; }
+
+.navbar {
+  position:sticky; top:0; z-index:1000; height:68px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 36px;
+  background:rgba(var(--bg-rgb,7,7,10),.82);
+  backdrop-filter:blur(28px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+  transition:background .4s, border-color .4s;
+}
+.nav-logo {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.65rem; letter-spacing:4px;
+  background:linear-gradient(90deg, var(--fb2) 0%, var(--text) 40%, var(--gs2) 80%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  transition:background .4s;
+}
+.nav-center { display:flex; gap:4px; align-items:center; }
+.nav-links { display:flex; gap:24px; }
+.nav-link {
+  font-size:.72rem; font-weight:500; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text3); transition:.3s; cursor:pointer;
+}
+.nav-link:hover { color:var(--text2); }
+
+.theme-switcher {
+  display:flex; gap:4px; align-items:center;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:50px; padding:4px;
+}
+.theme-btn {
+  width:32px; height:28px; border-radius:40px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.68rem; font-weight:700; letter-spacing:.5px;
+  transition:.25s; color:var(--text3); background:transparent;
+}
+.theme-btn:hover { color:var(--text); background:var(--surface3); }
+.theme-btn.active { background:var(--surface3); color:var(--text); }
+.theme-btn[data-t="fb"].active { background:var(--fb); color:#fff; }
+.theme-btn[data-t="gs"].active { background:var(--gs); color:#fff; }
+
+.hero { padding:64px 24px 48px; text-align:center; }
+.hero-card {
+  max-width:820px; margin:0 auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:28px; padding:48px 40px;
+  box-shadow:0 32px 80px rgba(0,0,0,.4);
+  position:relative; overflow:hidden;
+  transition:background .4s, border-color .4s;
+}
+.hero-card::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,255,255,.035) 0%,transparent 50%);
+}
+.hero-eyebrow {
+  font-size:.62rem; letter-spacing:5px; text-transform:uppercase;
+  color:var(--text3); margin-bottom:32px; transition:color .4s;
+}
+.hero-matchup {
+  display:flex; align-items:center; justify-content:center; gap:24px;
+  font-family:'Bebas Neue',sans-serif;
+}
+.hero-club { display:flex; flex-direction:column; align-items:center; gap:16px; flex:1; max-width:200px; }
+.hero-crest { width:88px; height:88px; object-fit:contain; transition:transform .4s; }
+.hero-crest:hover { transform:scale(1.06); }
+.hero-club-name {
+  font-size:.8rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text2); transition:color .4s;
+}
+.hero-score {
+  font-size:6.5rem; font-weight:400; line-height:1; letter-spacing:-4px;
+  color:var(--text); flex-shrink:0; min-width:200px;
+  transition:color .4s;
+}
+.hero-meta {
+  margin-top:28px; font-size:.82rem; font-weight:300;
+  color:var(--text3); transition:color .4s;
+}
+.hero-meta strong { color:var(--text2); font-weight:500; }
+
+.h2h-bar {
+  display:flex; max-width:820px; margin:0 auto 56px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:16px; overflow:hidden;
+  transition:background .4s, border-color .4s;
+}
+.h2h-cell {
+  flex:1; padding:20px 16px; text-align:center;
+  border-right:1px solid var(--border);
+  transition:border-color .4s;
+}
+.h2h-cell:last-child { border-right:none; }
+.h2h-num {
+  font-family:'Bebas Neue',sans-serif; font-size:2.5rem;
+  line-height:1; color:var(--text); transition:color .4s;
+}
+.h2h-num.fb-col { color:var(--fb2); }
+.h2h-num.gs-col { color:var(--gs2); }
+.h2h-label {
+  font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text3); margin-top:4px; transition:color .4s;
+}
+
+.section-wrap { max-width:1100px; margin:0 auto; padding:0 28px; }
+.section-title {
+  font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:4px;
+  color:var(--text); margin-bottom:28px;
+  display:flex; align-items:center; gap:14px;
+  transition:color .4s;
+}
+.section-title::before {
+  content:""; width:4px; height:32px; border-radius:2px; flex-shrink:0;
+  background:linear-gradient(var(--fb2),var(--gs2));
+  transition:background .4s;
+}
+
+.trophies-section { padding:20px 0 64px; }
+.trophies-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:20px;
+}
+.trophy-panel {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:24px; padding:32px; overflow:hidden; position:relative;
+  transition:background .4s, border-color .4s;
+}
+.trophy-panel::before {
+  content:""; position:absolute; inset:0; opacity:.05; pointer-events:none;
+  border-radius:24px;
+}
+.trophy-panel.fb-panel::before { background:linear-gradient(135deg,var(--fb),transparent); }
+.trophy-panel.gs-panel::before { background:linear-gradient(135deg,var(--gs),transparent); }
+.trophy-club-header {
+  display:flex; align-items:center; gap:18px; margin-bottom:28px;
+  padding-bottom:20px; border-bottom:1px solid var(--border);
+  transition:border-color .4s;
+}
+.trophy-crest { width:56px; height:56px; object-fit:contain; }
+.trophy-club-info {}
+.trophy-club-name {
+  font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:2px;
+  color:var(--text); transition:color .4s;
+}
+.trophy-club-since {
+  font-size:.68rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text3); transition:color .4s;
+}
+.trophy-list { display:flex; flex-direction:column; gap:10px; }
+.trophy-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px; border-radius:12px;
+  background:var(--surface2); border:1px solid var(--border);
+  transition:background .4s, border-color .4s;
+}
+.trophy-row:hover { border-color:var(--border2); }
+.trophy-left { display:flex; align-items:center; gap:12px; }
+.trophy-icon { font-size:1.2rem; width:28px; text-align:center; }
+.trophy-name { font-size:.82rem; font-weight:500; color:var(--text2); transition:color .4s; }
+.trophy-count {
+  font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:1px;
+  transition:color .4s;
+}
+.trophy-count.fb-col { color:var(--fb2); }
+.trophy-count.gs-col { color:var(--gs2); }
+.trophy-highlight {
+  font-size:.65rem; letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 10px; border-radius:50px; background:var(--accent);
+  color:#000; font-weight:700; opacity:.9;
+}
+
+.legendary-section { padding:20px 0 64px; }
+.legend-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+}
+.legend-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; padding:24px; cursor:pointer;
+  transition:all .35s cubic-bezier(.4,0,.2,1); position:relative; overflow:hidden;
+}
+.legend-card::before {
+  content:""; position:absolute; top:0; left:0; right:0; height:3px; border-radius:20px 20px 0 0;
+  transition:background .4s;
+}
+.legend-card.fb-win::before { background:linear-gradient(90deg,var(--fb),var(--fb2)); }
+.legend-card.gs-win::before { background:linear-gradient(90deg,var(--gs),var(--gs2)); }
+.legend-card.draw::before { background:linear-gradient(90deg,var(--text3),var(--text2)); }
+.legend-card:hover {
+  transform:translateY(-5px); border-color:var(--border2);
+  box-shadow:0 20px 48px rgba(0,0,0,.35);
+}
+.legend-tag {
+  display:inline-block; font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  padding:4px 10px; border-radius:50px; border:1px solid var(--border);
+  color:var(--text3); margin-bottom:14px; transition:color .4s, border-color .4s;
+}
+.legend-score {
+  font-family:'Bebas Neue',sans-serif; font-size:3.8rem; letter-spacing:-2px;
+  line-height:1; margin-bottom:6px; transition:color .4s;
+}
+.legend-card.fb-win .legend-score { color:var(--fb2); }
+.legend-card.gs-win .legend-score { color:var(--gs2); }
+.legend-card.draw .legend-score { color:var(--text2); }
+.legend-teams { font-size:.78rem; color:var(--text3); margin-bottom:10px; transition:color .4s; }
+.legend-desc {
+  font-size:.8rem; font-style:italic; color:var(--text2);
+  line-height:1.5; transition:color .4s;
+}
+.legend-date { font-size:.65rem; color:var(--text3); margin-top:12px; letter-spacing:1px; transition:color .4s; }
+
+.stories-section { padding:20px 0 64px; }
+.stories-scroll { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.story-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:24px; padding:32px; cursor:pointer;
+  transition:all .35s; overflow:hidden; position:relative;
+}
+.story-card::after {
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.07;
+  transition:opacity .35s;
+}
+.story-card.fb-story::after { background:linear-gradient(135deg,var(--fb),transparent 60%); }
+.story-card.gs-story::after { background:linear-gradient(135deg,var(--gs),transparent 60%); }
+.story-card:hover { border-color:var(--border2); transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.3); }
+.story-card:hover::after { opacity:.12; }
+.story-season {
+  font-family:'Bebas Neue',sans-serif; font-size:3.2rem; letter-spacing:2px;
+  line-height:1; margin-bottom:8px; transition:color .4s;
+}
+.story-card.fb-story .story-season { color:var(--fb2); }
+.story-card.gs-story .story-season { color:var(--gs2); }
+.story-club-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:50px; padding:5px 14px; margin-bottom:16px;
+  font-size:.7rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--text2); transition:background .4s, border-color .4s, color .4s;
+}
+.story-club-badge img, .story-club-badge svg { width:18px; height:18px; }
+.story-title {
+  font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700;
+  color:var(--text); margin-bottom:10px; line-height:1.3;
+  transition:color .4s;
+}
+.story-body {
+  font-size:.83rem; color:var(--text2); line-height:1.7;
+  transition:color .4s;
+}
+.story-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:18px; }
+.story-tag {
+  font-size:.6rem; letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 10px; border-radius:50px;
+  background:var(--surface3); color:var(--text3); border:1px solid var(--border);
+  transition:background .4s, color .4s, border-color .4s;
+}
+
+.controls-section {
+  padding:20px 0 40px;
+  display:flex; flex-wrap:wrap; gap:20px; align-items:center;
+}
+.countdown-wrap { display:flex; gap:8px; align-items:center; }
+.time-unit {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:14px; padding:14px 16px; min-width:72px; text-align:center;
+  transition:background .4s, border-color .4s;
+}
+.time-unit span {
+  display:block; font-family:'Bebas Neue',sans-serif;
+  font-size:2.2rem; line-height:1; color:var(--text); transition:color .4s;
+}
+.time-unit label { font-size:.58rem; letter-spacing:2px; text-transform:uppercase; color:var(--text3); transition:color .4s; }
+.countdown-label {
+  font-size:.65rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--text3); margin-bottom:8px; transition:color .4s;
+}
+.search-and-filter { flex:1; display:flex; gap:10px; flex-wrap:wrap; min-width:280px; }
+.search-box { position:relative; flex:1; min-width:200px; }
+.search-box svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:15px; height:15px; stroke:var(--text3); fill:none; stroke-width:2; transition:stroke .4s; }
+#searchInput {
+  width:100%; padding:12px 18px 12px 42px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:50px; color:var(--text);
+  font-size:.85rem; font-family:'DM Sans',sans-serif;
+  outline:none; transition:border-color .3s, background .4s;
+}
+#searchInput::placeholder { color:var(--text3); }
+#searchInput:focus { border-color:var(--border2); }
+.filter-wrap { display:flex; gap:6px; flex-wrap:wrap; }
+.filter-btn {
+  padding:8px 16px; border-radius:50px;
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text3); font-size:.7rem; font-weight:600;
+  letter-spacing:1px; text-transform:uppercase; transition:.25s;
+  font-family:'DM Sans',sans-serif;
+}
+.filter-btn:hover { color:var(--text); border-color:var(--border2); }
+.filter-btn.active { background:var(--surface3); color:var(--accent); border-color:var(--border2); }
+
+.archive-section { padding:20px 0 80px; }
+#match-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:16px;
+}
+.match-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:18px; padding:20px; cursor:pointer;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative; overflow:hidden;
+}
+.match-card::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 55%);
+}
+.match-card:hover { transform:translateY(-4px); border-color:var(--border2); box-shadow:0 16px 40px rgba(0,0,0,.35); }
+.card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.card-date { font-size:.68rem; letter-spacing:1.5px; color:var(--text3); text-transform:uppercase; transition:color .4s; }
+.card-comp {
+  font-size:.6rem; padding:3px 9px; border-radius:50px;
+  border:1px solid var(--border); color:var(--text3);
+  letter-spacing:1px; text-transform:uppercase; transition:border-color .4s, color .4s;
+}
+.card-matchup { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.card-team { flex:1; font-size:.85rem; font-weight:600; line-height:1.3; transition:color .4s; }
+.card-team.home { text-align:left; }
+.card-team.away { text-align:right; }
+.fb-team { color:var(--fb2); }
+.gs-team { color:var(--gs2); }
+.card-score {
+  font-family:'Bebas Neue',sans-serif; font-size:1.9rem;
+  background:var(--surface2); padding:4px 16px; border-radius:8px;
+  border:1px solid var(--border); white-space:nowrap; flex-shrink:0;
+  color:var(--text); transition:background .4s, border-color .4s, color .4s;
+}
+.card-footer {
+  padding-top:12px; border-top:1px solid var(--border);
+  font-size:.68rem; color:var(--text3);
+  display:flex; justify-content:space-between; align-items:center;
+  transition:border-color .4s, color .4s;
+}
+.result-pill {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:2px 8px; border-radius:50px; font-size:.62rem; font-weight:700; letter-spacing:1px;
+}
+.rp-fb { background:rgba(0,65,194,.15); color:var(--fb2); }
+.rp-gs { background:rgba(200,0,46,.15); color:var(--gs2); }
+.rp-draw { background:var(--surface3); color:var(--text3); }
+.card-cta { font-size:.65rem; font-weight:600; letter-spacing:1px; color:var(--text3); transition:.25s; }
+.match-card:hover .card-cta { color:var(--text); }
+.no-results { grid-column:1/-1; text-align:center; padding:56px 24px; color:var(--text3); font-size:.9rem; }
+
+.modal {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,.88); backdrop-filter:blur(22px);
+  z-index:2000; justify-content:center; align-items:center; padding:24px;
+}
+.modal.open { display:flex; }
+.modal-card {
+  width:100%; max-width:540px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:28px; padding:40px; position:relative;
+  max-height:88vh; overflow-y:auto;
+  animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);
+  transition:background .4s, border-color .4s;
+}
+@keyframes modalIn { from{transform:scale(.88) translateY(20px);opacity:0} to{transform:scale(1);opacity:1} }
+.modal-close {
+  position:absolute; top:18px; right:18px;
+  background:var(--surface2); border:1px solid var(--border);
+  width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text3); font-size:1rem; transition:.25s;
+}
+.modal-close:hover { color:var(--text); border-color:var(--border2); }
+.modal-comp { font-size:.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:10px; transition:color .4s; }
+.modal-score {
+  font-family:'Bebas Neue',sans-serif; font-size:5rem;
+  letter-spacing:-3px; color:var(--text); line-height:1;
+  transition:color .4s;
+}
+.modal-clubs { font-size:.83rem; color:var(--text3); margin-bottom:24px; transition:color .4s; }
+.modal-cols { display:flex; justify-content:space-between; gap:16px; }
+.modal-col { width:47%; }
+.modal-col-name { font-size:.82rem; font-weight:700; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); transition:color .4s, border-color .4s; }
+.modal-col-name.fb { color:var(--fb2); }
+.modal-col-name.gs { color:var(--gs2); }
+.modal-goals { list-style:none; }
+.modal-goals li { font-size:.8rem; color:var(--text3); padding:4px 0; display:flex; align-items:center; gap:6px; transition:color .4s; }
+.modal-goals li::before { content:"⚽"; font-size:.68rem; }
+.modal-footer { margin-top:22px; padding-top:18px; border-top:1px solid var(--border); font-size:.76rem; color:var(--text3); display:flex; justify-content:space-between; transition:border-color .4s, color .4s; }
+
+.site-footer {
+  border-top:1px solid var(--border); padding:32px 36px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:.72rem; color:var(--text3);
+  transition:border-color .4s, color .4s;
+}
+.footer-logo { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:3px; color:var(--text2); }
+
+@media(max-width:900px) {
+  .trophies-grid { grid-template-columns:1fr; }
+  .legend-grid { grid-template-columns:repeat(2,1fr); }
+  .stories-scroll { grid-template-columns:1fr; }
+}
+@media(max-width:640px) {
+  .navbar { padding:0 18px; }
+  .nav-links { display:none; }
+  .hero-card { padding:32px 18px; }
+  .hero-score { font-size:4.5rem; min-width:150px; }
+  .hero-crest { width:68px; height:68px; }
+  .h2h-bar { flex-wrap:wrap; }
+  .h2h-cell { min-width:50%; }
+  .legend-grid { grid-template-columns:1fr; }
+  #match-grid { grid-template-columns:1fr; }
+  .controls-section { flex-direction:column; align-items:stretch; }
+  .modal-card { padding:28px 18px; }
+  .modal-score { font-size:3.8rem; }
+  .theme-switcher { gap:2px; }
+  .theme-btn { width:28px; height:26px; }
+}
+</style>
+</head>
+<body>
+
+
+<nav class="navbar">
+  <div class="nav-logo">fenerversusgala</div>
+  <div class="nav-links">
+    <span class="nav-link" onclick="scrollTo('#trophies')">Trophies</span>
+    <span class="nav-link" onclick="scrollTo('#legendary')">Legendary</span>
+    <span class="nav-link" onclick="scrollTo('#stories')">Stories</span>
+    <span class="nav-link" onclick="scrollTo('#archive')">Archive</span>
+  </div>
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-t="dark" onclick="setTheme('dark')">🌑</button>
+    <button class="theme-btn" data-t="light" onclick="setTheme('light')">☀️</button>
+    <button class="theme-btn" data-t="fb" onclick="setTheme('fb')">FB</button>
+    <button class="theme-btn" data-t="gs" onclick="setTheme('gs')">GS</button>
+  </div>
+</nav>
+
+
+<header class="hero">
+  <div id="hero-card" class="hero-card"></div>
+</header>
+
+
+<div class="section-wrap">
+  <div id="h2h-bar" class="h2h-bar"></div>
+</div>
+
+
+<section id="trophies" class="trophies-section section-wrap" style="padding-top:12px;">
+  <h2 class="section-title">Trophy Cabinet</h2>
+  <div class="trophies-grid">
+
+    
+    <div class="trophy-panel fb-panel">
+      <div class="trophy-club-header">
+        <img src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" alt="Fenerbahçe" class="trophy-crest">
+        <div class="trophy-club-info">
+          <div class="trophy-club-name">Fenerbahçe SK</div>
+          <div class="trophy-club-since">Founded 1907 · Istanbul</div>
+        </div>
+      </div>
+      <div class="trophy-list">
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🏆</span><span class="trophy-name">Süper Lig</span></div>
+          <span class="trophy-count fb-col">19</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🥇</span><span class="trophy-name">Türkiye Kupası</span></div>
+          <span class="trophy-count fb-col">6</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🥈</span><span class="trophy-name">Türkiye Süper Kupası</span></div>
+          <span class="trophy-count fb-col">9</span>
+        </div>
+        <div class="trophy-row" style="margin-top:6px;">
+          <div class="trophy-left"><span class="trophy-icon">⭐</span><span class="trophy-name">Best European Result</span></div>
+          <span class="trophy-highlight">CL QF 2008</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="trophy-panel gs-panel">
+      <div class="trophy-club-header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Galatasaray_SK_football_logo.png/960px-Galatasaray_SK_football_logo.png" alt="Galatasaray" class="trophy-crest">
+        <div class="trophy-club-info">
+          <div class="trophy-club-name">Galatasaray SK</div>
+          <div class="trophy-club-since">Founded 1905 · Istanbul</div>
+        </div>
+      </div>
+      <div class="trophy-list">
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🏆</span><span class="trophy-name">Süper Lig</span></div>
+          <span class="trophy-count gs-col">25</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🥇</span><span class="trophy-name">Türkiye Kupası</span></div>
+          <span class="trophy-count gs-col">18</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🥈</span><span class="trophy-name">Türkiye Süper Kupası</span></div>
+          <span class="trophy-count gs-col">16</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🌍</span><span class="trophy-name">UEFA Cup</span></div>
+          <span class="trophy-count gs-col">1</span>
+        </div>
+        <div class="trophy-row">
+          <div class="trophy-left"><span class="trophy-icon">🌟</span><span class="trophy-name">UEFA Super Cup</span></div>
+          <span class="trophy-highlight">2000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="legendary" class="legendary-section section-wrap">
+  <h2 class="section-title">Legendary Encounters</h2>
+  <div id="legend-grid" class="legend-grid"></div>
+</section>
+
+
+<section id="stories" class="stories-section section-wrap">
+  <h2 class="section-title">Championship Stories</h2>
+  <div class="stories-scroll">
+
+    <div class="story-card gs-story">
+      <div class="story-season">1999–00</div>
+      <div class="story-club-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Galatasaray_SK_football_logo.png/960px-Galatasaray_SK_football_logo.png" width="20" height="20" style="object-fit:contain;" alt="GS">
+        Galatasaray
+      </div>
+      <div class="story-title">The Year Europe Stood Still</div>
+      <div class="story-body">Under Fatih Terim, Galatasaray achieved something no Turkish club had done before or since. They won the UEFA Cup in a penalty shootout against Arsenal, then beat Real Madrid to claim the UEFA Super Cup — all while capturing the Süper Lig title. Hakan Şükür, Hasan Şaş and a golden generation created an era that defined a club and a nation.</div>
+      <div class="story-tags">
+        <span class="story-tag">UEFA Cup</span>
+        <span class="story-tag">Super Cup</span>
+        <span class="story-tag">Süper Lig</span>
+        <span class="story-tag">Fatih Terim</span>
+      </div>
+    </div>
+
+    <div class="story-card fb-story">
+      <div class="story-season">2004–07</div>
+      <div class="story-club-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" width="20" height="20" style="object-fit:contain;" alt="FB">
+        Fenerbahçe
+      </div>
+      <div class="story-title">The Alex Epoch</div>
+      <div class="story-body">When Alex de Souza stepped onto Turkish soil, Fenerbahçe found their heartbeat. Three league titles in four seasons (2004, 2005, 2007) cemented his legacy as the greatest import in Turkish football history. His free-kicks became folklore, his performances in Istanbul derbies became myth. Opponents feared him. Fenerbahçe loved him.</div>
+      <div class="story-tags">
+        <span class="story-tag">3× Şampiyon</span>
+        <span class="story-tag">Alex de Souza</span>
+        <span class="story-tag">Derby Dominance</span>
+      </div>
+    </div>
+
+    <div class="story-card fb-story">
+      <div class="story-season">2010–11</div>
+      <div class="story-club-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" width="20" height="20" style="object-fit:contain;" alt="FB">
+        Fenerbahçe
+      </div>
+      <div class="story-title">Kocaman's Unbeaten Run</div>
+      <div class="story-body">Aykut Kocaman's Fenerbahçe went on a legendary unbeaten run through 2010–11 that seemed unstoppable. With Selçuk Şahin orchestrating from midfield and Edu, Cristian and Deivid providing firepower, they stormed to the title with style. A 2-1 win over Galatasaray in May 2011 was a declaration of dominance.</div>
+      <div class="story-tags">
+        <span class="story-tag">Unbeaten Run</span>
+        <span class="story-tag">Kocaman</span>
+        <span class="story-tag">Selçuk Şahin</span>
+      </div>
+    </div>
+
+    <div class="story-card gs-story">
+      <div class="story-season">2021-22</div>
+      <div class="story-club-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Galatasaray_SK_football_logo.png/960px-Galatasaray_SK_football_logo.png" width="20" height="20" style="object-fit:contain;" alt="GS">
+        Galatasaray
+      </div>
+      <div class="story-title">Galatasaray's 10v11 In Kadikoy</div>
+      <div class="story-body">Fenerbahce was undefeatable in Kadikoy for 2006-2021. But this match, Galatasaray have a red card on 19th minute. 80th minute Falcao scored. The ref gave Fenerbahce 2 free-kicks but Fenerbahce doesnt scored, On 90+7 Fenerbahce was almost scored, The ball returned from the pole and Henry Onyekuru scored 3th goal.</div>
+      <div class="story-tags">
+        <span class="story-tag">9V12</span>
+        <span class="story-tag">Kadikoy</span>
+        <span class="story-tag">Onyekuru</span>
+        <span class="story-tag">Referee</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<div id="archive" class="section-wrap" style="padding-top:12px;">
+  <h2 class="section-title">Match Archive</h2>
+  <div class="controls-section">
+    <div>
+      <div class="countdown-label">Next Derby · April 26, 2026</div>
+      <div class="countdown-wrap">
+        <div class="time-unit"><span id="days">00</span><label>Days</label></div>
+        <div class="time-unit"><span id="hours">00</span><label>Hrs</label></div>
+        <div class="time-unit"><span id="minutes">00</span><label>Min</label></div>
+        <div class="time-unit"><span id="seconds">00</span><label>Sec</label></div>
+      </div>
+    </div>
+    <div class="search-and-filter">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Search by year, player, competition…">
+      </div>
+      <div class="filter-wrap" id="filters"></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:16px;">
+    <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--text2);">SHOWING</span>
+    <span id="match-count" style="font-size:.7rem;color:var(--text3);letter-spacing:1px;"></span>
+  </div>
+  <div id="match-grid"></div>
+</div>
+
+
+<footer class="site-footer section-wrap" style="padding:32px 0;">
+  <div class="footer-logo">fenerversusgala</div>
+  <span>Fenerbahçe vs Galatasaray — The Eternal Derby</span>
+</footer>
+
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+
+<div style="display:none">
+  <img id="img-fb" src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" alt="Fenerbahçe">
+  <img id="img-gs" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Galatasaray_SK_football_logo.png/960px-Galatasaray_SK_football_logo.png" alt="Galatasaray">
+</div>
+
+<script>
+const RAW=[{"date":"2026-01-10","competition":"Süper Kupa","stadium":"Atatürk Olimpiyat Stadyumu","score":"0–2","home":"Galatasaray","away":"Fenerbahçe","fb_goals":["Guendoizi (28')","Oosterwolde (48')"],"gs_goals":[]},{"date":"2025-12-01","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Duran (90+6')"],"gs_goals":["Leroy Sane (27')"]},{"date":"2025-04-02","competition":"Türkiye Kupası","stadium":"Ülker Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Szymanski (45+2')"],"gs_goals":["Osimhen (10,27')"]},{"date":"2024-09-21","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"1–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Dzeko (63' P)"],"gs_goals":["Livakovic (20' OG)","Mertens (28')","Gabriel Sara (59')"]},{"date":"2024-05-19","competition":"Süper Lig","stadium":"Rams Park","score":"0–1","home":"Galatasaray","away":"Fenerbahçe","fb_goals":["Caglar (71')"],"gs_goals":[]},{"date":"2023-12-24","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2023-06-04","competition":"Süper Lig","stadium":"Nef Stadyumu","score":"3–0","home":"Galatasaray","away":"Fenerbahçe","fb_goals":[],"gs_goals":["Zaniolo (28,79')","Icardi (71')"]},{"date":"2023-01-08","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"0–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Oliveira (32')","Akturkoglu (78')","Icardi (90+10)"]},{"date":"2022-04-10","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Zajc (26')","Dursun (68')"],"gs_goals":[]},{"date":"2021-11-21","competition":"Süper Lig","stadium":"Nef Stadyumu","score":"1–2","home":"Galatasaray","away":"Fenerbahçe","fb_goals":["Ozil (31')","Crespo (90+4')"],"gs_goals":["Akturkoglu (16')"]},{"date":"2021-02-06","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"1–0","home":"Galatasaray","away":"Fenerbahçe","fb_goals":[],"gs_goals":["Mohammed (54')"]},{"date":"2020-09-27","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2020-02-23","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Kruse (21' P)"],"gs_goals":["Donk (40')","Falcao (80')","Onyekuru (90+7')"]},{"date":"2019-09-28","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"0–0","home":"Galatasaray","away":"Fenerbahçe","fb_goals":[],"gs_goals":[]},{"date":"2019-04-14","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Elmas (71')"],"gs_goals":["Onyekuru (66')"]},{"date":"2018-11-02","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"2–2","home":"Galatasaray","away":"Fenerbahçe","fb_goals":["Valbuena (66')","Jailson (72')"],"gs_goals":["Donk (31')","Linnes (49')"]},{"date":"2018-04-22","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2017-05-28","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["De Souza (45')"],"gs_goals":["Podolski (72')"]},{"date":"2016-11-20","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2016-05-15","competition":"Süper Lig","stadium":"Ülker Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Fernandao (22')","Nani (78')"],"gs_goals":[]},{"date":"2015-11-20","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Van Persie (44')","Nani (67')"],"gs_goals":[]},{"date":"2015-05-17","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Sow (61')"],"gs_goals":["Sneijder (67')"]},{"date":"2015-01-25","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Emre (10')"],"gs_goals":["Sneijder (88')"]},{"date":"2014-05-11","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2013-12-08","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2013-05-12","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Sow (44')","Webó (78')"],"gs_goals":["Drogba (66')"]},{"date":"2012-12-16","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Sow (45')"],"gs_goals":["Umut (58')","Selçuk İnan (90')"]},{"date":"2012-05-12","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Emre (24')","Baroni (71')"],"gs_goals":["Selçuk İnan (68')"]},{"date":"2011-12-18","competition":"Süper Lig","stadium":"Türk Telekom Arena","score":"1–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cristian (81')"],"gs_goals":["Melo (10')","Elmander (34')","Selçuk İnan (89')"]},{"date":"2011-05-22","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk Şahin (18')","Niang (84')"],"gs_goals":["Baros (52')"]},{"date":"2010-11-13","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Niang (48')"],"gs_goals":["Baros (23')","Kazım (90')"]},{"date":"2010-05-16","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (67')"],"gs_goals":[]},{"date":"2009-11-29","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"3–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (22', 63')","Semih (84')"],"gs_goals":["Baros (51')"]},{"date":"2009-05-17","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Semih (73')"],"gs_goals":["Baros (88')"]},{"date":"2008-12-13","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (45')","Güiza (82')"],"gs_goals":["Lincoln (67')"]},{"date":"2008-05-11","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2007-12-15","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Semih (33')","Alex (71')"],"gs_goals":[]},{"date":"2007-05-19","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (22')","Deivid (77')"],"gs_goals":["Ümit Karan (64')"]},{"date":"2006-12-03","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (29')","Appiah (68')"],"gs_goals":["Ümit Karan (51')"]},{"date":"2006-05-14","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (54')"],"gs_goals":[]},{"date":"2005-11-05","competition":"Türkiye Kupası","stadium":"Atatürk Olimpiyat Stadyumu","score":"1-5","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Luciano (40')"],"gs_goals":["Sukur (15,71,73')","Ates (38')","Ribery (88')"]},{"date":"2005-05-22","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (83')"],"gs_goals":[]},{"date":"2004-12-12","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Alex (38')","Tuncay (79')"],"gs_goals":["Hakan Şükür (56')"]},{"date":"2004-05-15","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2003-12-07","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Tuncay (21')","Serhat (64')"],"gs_goals":["Hasan Şaş (52')"]},{"date":"2003-05-03","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Tuncay (72')"],"gs_goals":[]},{"date":"2002-11-30","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"6–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Tuncay (2', 48')","Ariel Ortega (17')","Serhat (29')","Ümit Özat (63')","İlhan Mansız (88')"],"gs_goals":[]},{"date":"2002-05-11","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"2001-11-17","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Serhat (39')","Baliç (71')"],"gs_goals":["Hasan Şaş (55')"]},{"date":"2001-05-12","competition":"Süper Lig","stadium":"Ali Sami Yen","score":"2–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Revivo (14')","Serhat (58')"],"gs_goals":["Hakan Şükür (33')","Arif (76')"]},{"date":"2000-11-25","competition":"Süper Lig","stadium":"Şükrü Saracoğlu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Serhat (67')"],"gs_goals":[]},{"date":"2000-05-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Revivo (62')"],"gs_goals":["Hakan Şükür (45')","Capone (78')"]},{"date":"1999-12-04","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1999-05-16","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Revivo (38')"],"gs_goals":["Hakan Şükür (57')","Arif (90')"]},{"date":"1998-12-05","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Elvir Balić (29')","Oğuz (74')"],"gs_goals":["Hakan Şükür (51')","Arif (83')"]},{"date":"1998-05-17","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Hakan Şükür (88')"]},{"date":"1997-12-06","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (41')"],"gs_goals":["Hakan Şükür (12', 67')","Arif (79')"]},{"date":"1997-05-18","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (22')","Aykut (71')"],"gs_goals":["Hakan Şükür (34', 82')"]},{"date":"1996-12-07","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (59')"],"gs_goals":[]},{"date":"1996-05-19","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (64')"],"gs_goals":["Metin (78')"]},{"date":"1995-12-09","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (36')","Aykut (69')"],"gs_goals":["Arif (55')"]},{"date":"1995-05-21","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (52')"],"gs_goals":["Arif (80')"]},{"date":"1994-12-10","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"3–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (14', 61')","Oğuz (73')"],"gs_goals":["Metin (48')"]},{"date":"1994-05-22","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Arif (33')","Metin (77')"]},{"date":"1993-12-11","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (58')"],"gs_goals":[]},{"date":"1993-05-23","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (44')","Aykut (72')"],"gs_goals":["Metin (66')"]},{"date":"1992-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–3","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (39')"],"gs_goals":["Erdal (12')","Tanju (55')","Metin (81')"]},{"date":"1992-05-24","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1991-12-13","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (21')","Oğuz (76')"],"gs_goals":[]},{"date":"1991-05-26","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (47')"],"gs_goals":["Tanju (63')"]},{"date":"1990-12-15","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Tanju (88')"]},{"date":"1990-05-20","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (34')","Oğuz (69')"],"gs_goals":["Tanju (52')"]},{"date":"1989-12-16","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1989-05-28","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Oğuz (61')"],"gs_goals":["Tanju (79')"]},{"date":"1988-12-17","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (28')","Oğuz (73')"],"gs_goals":["Tanju (44')"]},{"date":"1988-05-22","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (57')"],"gs_goals":[]},{"date":"1987-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Tanju (66')"]},{"date":"1987-05-31","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Rıdvan (60')"],"gs_goals":["Tanju (74')"]},{"date":"1986-12-13","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (12')","Rıdvan (68')"],"gs_goals":[]},{"date":"1986-05-25","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (41')"],"gs_goals":["Prekazi (55')","Tanju (83')"]},{"date":"1985-12-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (49')"],"gs_goals":["Prekazi (76')"]},{"date":"1985-05-26","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1984-12-16","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Aykut (33')","Selçuk (71')"],"gs_goals":["Fatih (58')"]},{"date":"1984-05-20","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (62')"],"gs_goals":[]},{"date":"1983-12-18","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1983-05-29","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Rıdvan (36')"],"gs_goals":["Prekazi (54')","Fatih (79')"]},{"date":"1982-12-11","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1982-05-29","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (19')","Rıdvan (68')"],"gs_goals":[]},{"date":"1981-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Rıdvan (48')"],"gs_goals":["Mustafa (75')"]},{"date":"1981-05-30","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Mustafa (83')"]},{"date":"1980-12-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Rıdvan (57')"],"gs_goals":[]},{"date":"1980-05-25","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (29')","Rıdvan (71')"],"gs_goals":["Fatih (64')"]},{"date":"1979-12-16","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1979-05-27","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (62')"],"gs_goals":[]},{"date":"1978-12-10","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (33')","Cemil (80')"],"gs_goals":["Fatih (55')"]},{"date":"1978-05-28","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1977-12-17","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Selçuk (41')"],"gs_goals":["Fatih (69')"]},{"date":"1977-05-29","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (74')"],"gs_goals":[]},{"date":"1976-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1976-05-30","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ziya (21')","Alparslan (66')"],"gs_goals":[]},{"date":"1975-12-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (58')"],"gs_goals":["Aydın (70')"]},{"date":"1975-05-25","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Fatih (63')"]},{"date":"1974-12-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"3–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (12')","Ziya (44')","Alparslan (77')"],"gs_goals":[]},{"date":"1974-05-26","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ziya (39')"],"gs_goals":["Gökmen (55')","Fatih (81')"]},{"date":"1973-12-15","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1973-05-27","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (18')","Ziya (65')"],"gs_goals":["Fatih (52')"]},{"date":"1972-12-10","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ziya (49')"],"gs_goals":["Gökmen (72')"]},{"date":"1972-05-21","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (61')"],"gs_goals":[]},{"date":"1971-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Gökmen (74')"]},{"date":"1971-05-23","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (56')"],"gs_goals":["Gökmen (68')"]},{"date":"1970-12-13","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ogün (34')","Cemil (71')"],"gs_goals":[]},{"date":"1970-05-31","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1969-12-14","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Cemil (58')"],"gs_goals":[]},{"date":"1969-05-25","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ogün (18')","Şeref (64')"],"gs_goals":[]},{"date":"1968-12-15","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1968-05-26","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ogün (61')"],"gs_goals":["Metin Oktay (75')"]},{"date":"1967-12-24","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Şeref (33')","Ogün (77')"],"gs_goals":["Metin Oktay (49')"]},{"date":"1967-06-04","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Metin Oktay (66')"]},{"date":"1966-12-11","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ogün (52')"],"gs_goals":[]},{"date":"1966-05-22","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Ogün (21')","Şeref (67')"],"gs_goals":["Metin Oktay (40', 85')"]},{"date":"1965-12-12","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Metin Oktay (74')"]},{"date":"1965-05-16","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Can Bartu (63')"],"gs_goals":[]},{"date":"1964-12-06","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"3–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Şeref (12')","Can (55')","Ercan (78')"],"gs_goals":[]},{"date":"1964-05-31","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Lefter (34')","Bartu (71')"],"gs_goals":["Metin Oktay (49')"]},{"date":"1963-12-22","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1963-06-02","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"2–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Lefter (11')","Bartu (60')"],"gs_goals":["Metin Oktay (47')"]},{"date":"1962-12-23","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Bartu (83')"],"gs_goals":[]},{"date":"1962-07-01","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1962-02-18","competition":"Millî Lig","stadium":"İnönü Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Bartu (70')"],"gs_goals":["Metin Oktay (30', 55')"]},{"date":"1961-09-20","competition":"Özel Maç","stadium":"Ankara 19 Mayıs","score":"1–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Bartu (59')"],"gs_goals":["Altıntabak (67')"]},{"date":"1961-08-30","competition":"Dörtlü Turnuva","stadium":"Mithatpaşa Stadyumu","score":"2–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Berkman (1' kk)","Küçükandonyadis (28')"],"gs_goals":[]},{"date":"1961-06-25","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Gündüz (41')"],"gs_goals":["Köken (33')","Elmastaşoğlu (67')"]},{"date":"1960-12-18","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"0–5","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Oktay (1', 9', 61', 68')","Altıntabak (25')"]},{"date":"1960-10-05","competition":"Özel Maç","stadium":"Ankara 19 Mayıs","score":"0–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":[]},{"date":"1960-09-07","competition":"Özel Maç","stadium":"Ankara 19 Mayıs","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Oktay (56')"]},{"date":"1960-07-03","competition":"Cemal Gürsel Kupası","stadium":"Mithatpaşa Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Küçükandonyadis (46')"],"gs_goals":[]},{"date":"1960-04-13","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Gündüz (22')"],"gs_goals":["Berman (2')","Oktay (25')"]},{"date":"1960-01-24","competition":"Hasan Polatkan Kupası","stadium":"Ankara 19 Mayıs","score":"1–2","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Küçükandonyadis (37' pen.)"],"gs_goals":["Köken (41', 61')"]},{"date":"1959-12-17","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"1–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Bartu (77')"],"gs_goals":[]},{"date":"1959-06-14","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"4–0","home":"Fenerbahçe","away":"Galatasaray","fb_goals":["Gündüz (9')","Erdem (44')","Güven (68')","Has (71')"],"gs_goals":[]},{"date":"1959-06-10","competition":"Millî Lig","stadium":"Mithatpaşa Stadyumu","score":"0–1","home":"Fenerbahçe","away":"Galatasaray","fb_goals":[],"gs_goals":["Oktay (39')"]}];
+
+const seenK=new Set();
+const matches=RAW.filter(m=>{const k=m.date+m.competition;if(seenK.has(k))return false;seenK.add(k);return true;});
+
+function parseScore(s){const p=s.split(/[–\-]/);return{home:parseInt(p[0])||0,away:parseInt(p[1])||0};}
+function getResult(m){
+  const fb=m.home.includes('Fenerbahçe');
+  const{home,away}=parseScore(m.score);
+  if(home===away)return'draw';
+  return((fb&&home>away)||(!fb&&away>home))?'fb':'gs';
+}
+function fmtDate(d){
+  const[y,mo,day]=d.split('-');
+  return`${parseInt(day)} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(mo)-1]} ${y}`;
+}
+function fbSVG(w='24',h='29'){return`<svg width="${w}" height="${h}" viewBox="0 0 80 96"><use href="#logo-fb"/></svg>`;}
+function gsSVG(w='24',h='29'){return`<svg width="${w}" height="${h}" viewBox="0 0 80 96"><use href="#logo-gs"/></svg>`;}
+
+const FB_LOGO='https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png';
+const GS_LOGO='https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Galatasaray_SK_football_logo.png/960px-Galatasaray_SK_football_logo.png';
+function logo(isFB,cls='hero-crest'){
+  return`<img src="${isFB?FB_LOGO:GS_LOGO}" alt="${isFB?'Fenerbahçe':'Galatasaray'}" class="${cls}" loading="lazy">`;
+}
+function renderHero(){
+  const m=matches[0];
+  const fb=m.home.includes('Fenerbahçe');
+  document.getElementById('hero-card').innerHTML=`
+    <div class="hero-eyebrow">${m.competition} &nbsp;·&nbsp; Most Recent</div>
+    <div class="hero-matchup">
+      <div class="hero-club">
+        ${logo(fb)}
+        <div class="hero-club-name">${m.home}</div>
+      </div>
+      <div class="hero-score">${m.score}</div>
+      <div class="hero-club">
+        ${logo(!fb)}
+        <div class="hero-club-name">${m.away}</div>
+      </div>
+    </div>
+    <div class="hero-meta"><strong>${m.stadium}</strong> &nbsp;·&nbsp; ${fmtDate(m.date)}</div>`;
+}
+
+function renderH2H(){
+  let fb=0,gs=0,draws=0,totalGoals=0;
+  matches.forEach(m=>{
+    const r=getResult(m);if(r==='fb')fb++;else if(r==='gs')gs++;else draws++;
+    const{home,away}=parseScore(m.score);totalGoals+=home+away;
+  });
+  document.getElementById('h2h-bar').innerHTML=`
+    <div class="h2h-cell"><div class="h2h-num fb-col">${fb}</div><div class="h2h-label">Fenerbahçe Wins</div></div>
+    <div class="h2h-cell"><div class="h2h-num">${draws}</div><div class="h2h-label">Draws</div></div>
+    <div class="h2h-cell"><div class="h2h-num gs-col">${gs}</div><div class="h2h-label">Galatasaray Wins</div></div>
+    <div class="h2h-cell"><div class="h2h-num">${matches.length}</div><div class="h2h-label">Total Matches</div></div>
+    <div class="h2h-cell"><div class="h2h-num">${totalGoals}</div><div class="h2h-label">Total Goals</div></div>`;
+}
+
+const LEGENDS=[
+  {date:'2002-11-30',tag:'Record Win',desc:'Fenerbahçe destroyed Galatasaray 6–0 at Ali Sami Yen in the most emphatic Derby victory ever recorded.'},
+  {date:'1960-12-18',tag:'Metin Oktay Era',desc:'Metin Oktay scored 4 times as GS humiliated FB 5–0 at Mithatpaşa in a golden-era masterclass.'},
+  {date:'2005-11-05',tag:'Cup Classic',desc:'Hakan Şükür\'s hat-trick in the Türkiye Kupası final shocked Fenerbahçe in a 5–1 demolition.'},
+  {date:'2009-11-29',tag:'Alex Masterclass',desc:'Alex de Souza scored twice at Ali Sami Yen as Fenerbahçe ran out 3–1 winners in a superb away performance.'},
+  {date:'2023-06-04',tag:'Title Season',desc:'Zaniolo and Icardi dismantled Fenerbahçe 3–0 as Galatasaray sealed their title with a statement derby.'},
+  {date:'1959-06-14',tag:'Dawn of the League',desc:'One of the first great derbies of the Millî Lig era — Fenerbahçe won 4–0 in a foundation fixture.'},
+];
+function renderLegendary(){
+  document.getElementById('legend-grid').innerHTML=LEGENDS.map(l=>{
+    const m=matches.find(x=>x.date===l.date);
+    if(!m)return'';
+    const idx=matches.indexOf(m);
+    const r=getResult(m);
+    const cls=r==='fb'?'fb-win':r==='gs'?'gs-win':'draw';
+    const fb=m.home.includes('Fenerbahçe');
+    return`<div class="legend-card ${cls}" onclick="openModal(${idx})">
+      <span class="legend-tag">${l.tag}</span>
+      <div class="legend-score">${m.score}</div>
+      <div class="legend-teams">${m.home} vs ${m.away}</div>
+      <div class="legend-desc">${l.desc}</div>
+      <div class="legend-date">📅 ${fmtDate(m.date)} &nbsp;·&nbsp; ${m.stadium}</div>
+    </div>`;
+  }).join('');
+}
+
+const COMPS=[...new Set(matches.map(m=>m.competition))];
+let activeFilter='All';
+function renderFilters(){
+  document.getElementById('filters').innerHTML=['All',...COMPS].slice(0,5).map(c=>
+    `<button class="filter-btn ${c===activeFilter?'active':''}" onclick="setFilter(${JSON.stringify(c)})">${c==='All'?'All':c}</button>`
+  ).join('');
+}
+function setFilter(f){activeFilter=f;renderFilters();applyFilters();}
+
+function renderGrid(data){
+  const el=document.getElementById('match-grid');
+  document.getElementById('match-count').textContent=`${data.length} matches`;
+  if(!data.length){el.innerHTML='<div class="no-results">No matches found.</div>';return;}
+  el.innerHTML=data.map(m=>{
+    const idx=matches.indexOf(m);
+    const fb=m.home.includes('Fenerbahçe');
+    const r=getResult(m);
+    const rClass=r==='fb'?'rp-fb':r==='gs'?'rp-gs':'rp-draw';
+    const rTxt=r==='fb'?'FB Win':r==='gs'?'GS Win':'Draw';
+    return`<div class="match-card" onclick="openModal(${idx})">
+      <div class="card-top">
+        <span class="card-date">${fmtDate(m.date)}</span>
+        <span class="card-comp">${m.competition}</span>
+      </div>
+      <div class="card-matchup">
+        <div class="card-team home ${fb?'fb-team':'gs-team'}">
+          <img src="${fb?FB_LOGO:GS_LOGO}" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle;margin-right:5px;">${m.home}
+        </div>
+        <div class="card-score">${m.score}</div>
+        <div class="card-team away ${fb?'gs-team':'fb-team'}">
+          ${m.away}<img src="${fb?GS_LOGO:FB_LOGO}" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle;margin-left:5px;">
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="result-pill ${rClass}">${rTxt}</span>
+        <span class="card-cta">${m.stadium.length>22?m.stadium.slice(0,22)+'…':m.stadium} →</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function applyFilters(){
+  const term=document.getElementById('searchInput').value.toLowerCase().trim();
+  let data=matches;
+  if(activeFilter!=='All')data=data.filter(m=>m.competition===activeFilter);
+  if(term)data=data.filter(m=>
+    m.date.includes(term)||m.competition.toLowerCase().includes(term)||
+    m.stadium.toLowerCase().includes(term)||m.score.includes(term)||
+    (m.fb_goals||[]).join(' ').toLowerCase().includes(term)||
+    (m.gs_goals||[]).join(' ').toLowerCase().includes(term)
+  );
+  renderGrid(data);
+}
+
+function openModal(idx){
+  const m=matches[idx];
+  const fb=m.home.includes('Fenerbahçe');
+  const fbG=m.fb_goals||[],gsG=m.gs_goals||[];
+  const hG=fb?fbG:gsG,aG=fb?gsG:fbG;
+  const gl=(arr,right)=>arr.length
+    ?arr.map(g=>`<li style="${right?'justify-content:flex-end;text-align:right;':''}">${g}</li>`).join('')
+    :`<li style="list-style:none;font-size:.75rem;opacity:.5;${right?'justify-content:flex-end;':''}">No goals</li>`;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="modal-comp">${m.competition}</div>
+    <div class="modal-score">${m.score}</div>
+    <div class="modal-clubs" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+      <img src="${fb?FB_LOGO:GS_LOGO}" style="width:28px;height:28px;object-fit:contain;" alt="">
+      <span>${m.home} vs ${m.away}</span>
+      <img src="${fb?GS_LOGO:FB_LOGO}" style="width:28px;height:28px;object-fit:contain;" alt="">
+    </div>
+    <div class="modal-cols">
+      <div class="modal-col">
+        <div class="modal-col-name ${fb?'fb':'gs'}">${m.home}</div>
+        <ul class="modal-goals">${gl(hG,false)}</ul>
+      </div>
+      <div class="modal-col" style="text-align:right;">
+        <div class="modal-col-name ${fb?'gs':'fb'}" style="text-align:right;">${m.away}</div>
+        <ul class="modal-goals" style="text-align:right;">${gl(aG,true)}</ul>
+      </div>
+    </div>
+    <div class="modal-footer"><span>📍 ${m.stadium}</span><span>📅 ${fmtDate(m.date)}</span></div>`;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+
+function startCountdown(){
+  const target=new Date('2026-04-26T19:00:00').getTime();
+  const pad=n=>String(n).padStart(2,'0');
+  const tick=()=>{
+    const d=target-Date.now();
+    if(d<=0)return;
+    document.getElementById('days').textContent=pad(Math.floor(d/86400000));
+    document.getElementById('hours').textContent=pad(Math.floor((d%86400000)/3600000));
+    document.getElementById('minutes').textContent=pad(Math.floor((d%3600000)/60000));
+    document.getElementById('seconds').textContent=pad(Math.floor((d%60000)/1000));
+  };
+  tick();setInterval(tick,1000);
+}
+
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.theme-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.t===t);
+  });
+  try{localStorage.setItem('fvg-theme',t);}catch(e){}
+}
+
+function scrollTo(sel){
+  const el=document.querySelector(sel);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+(function(){
+  try{const s=localStorage.getItem('fvg-theme');if(s)setTheme(s);}catch(e){}
+  renderHero();
+  renderH2H();
+  renderLegendary();
+  renderFilters();
+  renderGrid(matches);
+  startCountdown();
+  document.getElementById('searchInput').addEventListener('input',applyFilters);
+  document.getElementById('modal-close').addEventListener('click',closeModal);
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+})();
+</script>
+</body>
+</html>
